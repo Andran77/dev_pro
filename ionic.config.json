@@ -1,0 +1,7 @@
+{
+  "name": "dev_pro",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
