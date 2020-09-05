@@ -16,7 +16,7 @@ export class CountryState {
 
     // Get all countries
     @Selector() static getCountry(state: CountryStateModel) {
-        return [];
+        return state.countries;
     }
 
     // Load a countries
@@ -24,16 +24,15 @@ export class CountryState {
     load(context: StateContext<CountryStateModel>, action: LoadMoreCountry) {
         const state = context.getState();
         context.patchState({
-            countries: [...state.countries, action.payload]
+            countries: [...state.countries, ...action.payload]
         });
     }
 
-    // Refresh a countries
+    // Refresh a countries, set empty array
     @Action(RefreshCountry)
     refresh(context: StateContext<CountryStateModel>, action: RefreshCountry) {
-        const state = context.getState();
         context.patchState({
-            countries: state.countries.filter(({ name }) => name !== action.name)
+            countries: []
         });
     }
 }

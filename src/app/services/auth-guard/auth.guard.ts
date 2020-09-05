@@ -14,7 +14,6 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const token = await this.storage.get('token');
-    // console.log(token, 'token');
     if (!token || !token.user) {
       this.router.navigate(['login'])
       return false;
