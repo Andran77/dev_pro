@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -7,13 +8,16 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private storage: Storage
   ) {}
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (localStorage.getItem('token') !== 'test123456') {
+  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    const token = await this.storage.get('token');
+    // console.log(token, 'token');
+    if (!token || !token.user) {
       this.router.navigate(['login'])
-      return true;
+      return false;
     }
     return true;
   }

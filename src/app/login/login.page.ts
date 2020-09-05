@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private storage: Storage
   ) { }
 
   ngOnInit() {
@@ -45,7 +47,10 @@ export class LoginPage implements OnInit {
   login() {
     if (this.loginForm.valid) {
       console.log('next step');
-      localStorage.setItem('token', 'test123456');
+      this.storage.set('token', {
+        user: this.loginForm.controls['username'].value,
+        password: this.loginForm.controls['password'].value
+      });
       this.router.navigate(['home']);
     } else {
       this.validateAllFormFields(this.loginForm);
