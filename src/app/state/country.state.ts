@@ -1,6 +1,10 @@
 import { State, Action, Selector, StateContext } from '@ngxs/store';
+import {tap} from 'rxjs/operators';
+
 import { Country } from '../models/country.model';
-import { LoadMoreCountry, RefreshCountry } from '../actions/country.action';
+import { LoadMoreCountry, RefreshCountry, GetCountry } from '../actions/country.action';
+import { CountryService } from '../services/country/country.service';
+import { Injectable } from '@angular/core';
 
 export class CountryStateModel {
     countries: Country[];
@@ -12,27 +16,50 @@ export class CountryStateModel {
         countries: []
     }
 })
+@Injectable({
+    providedIn: 'root'
+})
 export class CountryState {
 
-    // Get all countries
-    @Selector() static getCountry(state: CountryStateModel) {
+    constructor(
+        private countryService: CountryService
+    ) {}
+
+    // Get State countries
+    @Selector() static getCountryList(state: CountryStateModel) {
         return state.countries;
+    }
+
+    // Get a countries
+    @Action(GetCountry)
+    get({getState, setState}: StateContext<CountryStateModel>) {
+        return this.countryService.getCountries(1).pipe(tap((result) => {
+            const state = getState();
+            setState({
+                ...state,
+                countries: result,
+            });
+        }));
     }
 
     // Load a countries
     @Action(LoadMoreCountry)
-    load(context: StateContext<CountryStateModel>, action: LoadMoreCountry) {
-        const state = context.getState();
-        context.patchState({
-            countries: [...state.countries, ...action.payload]
-        });
+    load({getState, patchState}: StateContext<CountryStateModel>, {id}:  LoadMoreCountry) {
+        return this.countryService.getCountries(id).pipe(tap((result) => {
+            const state = getState();
+            patchState({
+                countries: [...state.countries, ...result],
+            });
+        }));
     }
 
     // Refresh a countries, set empty array
     @Action(RefreshCountry)
-    refresh(context: StateContext<CountryStateModel>, action: RefreshCountry) {
-        context.patchState({
-            countries: []
+    refresh({getState, setState}: StateContext<CountryStateModel>) {
+        const state = getState();
+        setState({
+            ...state,
+            countries: [],
         });
     }
 }

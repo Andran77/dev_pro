@@ -1,9 +1,15 @@
 import { Country } from '../models/country.model';
 
+export class GetCountry {
+    static readonly type = '[Country] RefreshCountry';
+
+    constructor() { }
+}
+
 export class LoadMoreCountry {
     static readonly type = '[Country] LoadMoreCountry';
 
-    constructor(public payload: any) { }
+    constructor(public id: number) { }
 }
 
 export class RefreshCountry {

@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
 import { Storage } from '@ionic/storage';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { CountryState } from '../state/country.state';
 import { Country } from '../models/country.model';
-import { LoadMoreCountry, RefreshCountry } from '../actions/country.action';
+import { LoadMoreCountry, RefreshCountry, GetCountry } from '../actions/country.action';
 
 @Component({
   selector: 'app-home',
@@ -19,48 +18,47 @@ export class HomePage implements OnInit {
 
   pageCount = 0;
   loading = true;
-  cnt = 0;
-  disableLoad = false;
+  disableLoad = true;
+  subscription: Subscription;
 
-  @Select(CountryState.getCountry) countries$: Observable<Country[]>;
+  @Select(CountryState.getCountryList) countries$: Observable<Country[]>;
 
   constructor(
-    private http: HttpClient,
     private navCtrl: NavController,
     private storage: Storage,
     private store: Store
   ) {
-    this.loadCountry();
+    this.getCountry();
   }
 
   ngOnInit() {
-    this.countries$.subscribe(data => {
+    this.subscription = this.countries$.subscribe(data => {
       if (data && data.length) {
         this.loading = false;
-        this.cnt = data.length
+        this.disableLoad = this.pageCount*10 === data.length;
       }
     })
   }
 
-  async loadCountry() {
-    this.disableLoad = this.pageCount*10 === this.cnt;
-    const countryPage = await this.getCountryByPage();
-    this.store.dispatch(new LoadMoreCountry(
-      countryPage['page_country']
-    ));
+  ionViewDidLeave() {
+    this.loading = false;
+    this.pageCount = 0;
+    this.storage.remove('token');
+    this.store.dispatch(new RefreshCountry());
+    this.subscription.unsubscribe()
   }
 
-  getCountryByPage() {
-    const page = ++this.pageCount;
-    return this.http.get('https://getcountry.herokuapp.com/' + page + '/').toPromise();
+  getCountry() {
+    this.pageCount++;
+    this.store.dispatch(new GetCountry());
+  }
+
+  async loadCountry() {
+    this.pageCount++;
+    this.store.dispatch(new LoadMoreCountry(this.pageCount));
   }
 
   logout() {
-    this.loading = false;
-    this.pageCount = 1;
-    this.storage.remove('token');
-    this.store.dispatch(new RefreshCountry());
     this.navCtrl.navigateRoot('login');
   }
-
 }
