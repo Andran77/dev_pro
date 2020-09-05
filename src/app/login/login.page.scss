@@ -21,6 +21,7 @@ app-login {
                 &-field {
                     --padding-start: 20px;
                     --padding-end: 20px;
+                    --highlight-background: none;
                     &--error {
                         --border-color: #eb0000;
                     }

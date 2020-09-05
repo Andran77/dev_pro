@@ -45,8 +45,8 @@ export class LoginPage implements OnInit {
   login() {
     if (this.loginForm.valid) {
       console.log('next step');
-      localStorage.setItem('token', 'test123456')
-      this.router.navigate(['home'])
+      localStorage.setItem('token', 'test123456');
+      this.router.navigate(['home']);
     } else {
       this.validateAllFormFields(this.loginForm);
     }
@@ -65,7 +65,6 @@ export class LoginPage implements OnInit {
     switch (formField) {
       case 'username':
         const usernameErrors = this.getControls(this.loginForm).username.errors;
-        console.log(usernameErrors, 'usernameErrors');
         if (usernameErrors && usernameErrors.required) {
           return 'Username is required';
         } else if (usernameErrors && usernameErrors.maxlength) {
