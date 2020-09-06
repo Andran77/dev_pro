@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content forceOverscroll="false">
+  <div slot="fixed" class="login">
+    <div class="logo"></div>
+    <div class="wrapper">
+      <form class="form" [formGroup]="loginForm" (ngSubmit)="login(form)">
+        <ion-list class="form-list">
+          <ion-item class="form-field" [class.form-field--error]="showError(loginForm, 'username')">
+            <ion-label class="form-label" position="floating">
+              Username
+            </ion-label>
+            <ion-input
+              class="form-input"
+              type="text"
+              placeholder="Enter Username"
+              formControlName="username">
+            </ion-input>
+          </ion-item>
+          <ion-label *ngIf="showError(loginForm, 'username')" class="form-label--error" position="stacked">
+            {{getErrorMessage('username')}}
+          </ion-label>
+          <ion-item class="form-field" [class.form-field--error]="showError(loginForm, 'password')">
+            <ion-label  class="form-label" position="floating">
+              Password
+            </ion-label>
+            <ion-input
+              class="form-input"
+              type="password"
+              placeholder="Enter Password"
+              formControlName="password">
+            </ion-input>
+          </ion-item>
+          <ion-label *ngIf="showError(loginForm, 'password')" class="form-label--error" position="stacked">
+            {{getErrorMessage('password')}}
+          </ion-label>
+        </ion-list>
+        <ion-button class="form-button" expand="block" size="small" shape="round" fill="outline" (click)="login()">
+          Sign in
+        </ion-button>
+      </form>
+    </div>
+  </div>
+</ion-content>

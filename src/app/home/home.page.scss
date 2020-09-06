@@ -1,27 +1,91 @@
-#container {
-  text-align: center;
+app-home {
+  .logout {
+    padding-right: 10px;
+    &-icon {
+      background: url("../../assets/image/log-out.png") center no-repeat;
+      height: 600px;
+      width: 600px;
+      zoom: 0.05;
+    }
+  }
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
+  .flag-icon {
+    border-radius: 0.3rem;
+    width: 2rem;
+    height: 2rem;
+    align-self: center;
+  }
+  .country {
+    background-color: white;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
+    &-list {
+      margin: 0;
+    }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+    &-item {
+      display: block;
+      width: auto;
+      min-height: 0;
+      border-top: 0 !important;
+      border-bottom: 1px solid #dcdcdc !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      cursor: pointer;
+      --inner-border-width: 0;
 
-  color: #8c8c8c;
+      &:first-child {
+        border-top: 0;
+      }
+      &:last-child {
+        border-bottom: 1px solid #dcdcdc !important;
+      }
+      &-spinner {
+        margin: auto;
+      }
+      &-button {
+        margin: auto;
+        --border-color: #596778;
+        --border-width: 1px;
+        --color: #596778;
+        text-transform: uppercase;
+        --background-activated: none;
+        --color-activated: #596711;
+      }
+    }
+    &-item:nth-child(odd) {
+      --background: rgba(230, 235, 239, 0.2);
+    }
+  }
 
-  margin: 0;
-}
+  .countryinfo {
+    display: flex;
+    width: 100%;
+    padding: 0.7rem 0;
+    
+    &-name {
+      align-self: center;
+      margin-left: 1.6rem;
+      font-size: 1.15rem;
+    }
 
-#container a {
-  text-decoration: none;
+    &-right {
+      align-self: center;
+      text-align: right;
+      flex-grow: 1;
+      white-space: nowrap;
+    }
+
+    &-code {
+      font-size: 1.1rem;
+      text-align: right;
+      flex-grow: 1;
+      padding-left: 1rem;
+      padding-right: 0.5rem;
+      color: #596778;
+    }
+  }
 }

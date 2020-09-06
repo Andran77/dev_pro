@@ -1,0 +1,56 @@
+app-login {
+    .login {
+        height: 100%;
+        width: 100%;
+        .logo {
+            background: url("../../assets/image/logo.png") center no-repeat;
+            height: 500px;
+            width: 500px;
+            zoom: 0.5;
+            margin: auto;
+        }
+        .wrapper {
+            width: 100%;
+            bottom: 0;
+            position: absolute;
+            .form {
+                padding: 10px;
+                &-list {
+                    padding-bottom: 10px;
+                }
+                &-field {
+                    --padding-start: 20px;
+                    --padding-end: 20px;
+                    --highlight-background: none;
+                    &--error {
+                        --border-color: #eb0000;
+                    }
+                }
+                &-label {
+                    color: #596778;
+                    &--error {
+                        color: #eb0000;
+                        font-size: 10px;
+                        padding-left: 20px;
+                    }
+                }
+                &-input {
+                    --placeholder-color: #b6bcc4;
+                    &--error {
+                        color: #eb0000;
+                    }
+                }
+                &-button {
+                    --border-color: #596778;
+                    --border-width: 1px;
+                    --color: #596778;
+                    height: 40px;
+                    font-size: 15px;
+                    text-transform: uppercase;
+                    --background-activated: none;
+                    --color-activated: #596711;
+                }
+            }
+        }
+    }
+}
