@@ -1,5 +1,3 @@
-import { Country } from '../models/country.model';
-
 export class GetCountry {
     static readonly type = '[Country] RefreshCountry';
 

@@ -45,7 +45,7 @@ export class HomePage implements OnInit {
     this.pageCount = 0;
     this.storage.remove('token');
     this.store.dispatch(new RefreshCountry());
-    this.subscription.unsubscribe()
+    this.subscription.unsubscribe();
   }
 
   getCountry() {
