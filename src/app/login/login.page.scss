@@ -1,5 +1,6 @@
 app-login {
     .login {
+        background: #F8F9FE;
         height: 100%;
         width: 100%;
         .logo {
@@ -16,9 +17,11 @@ app-login {
             .form {
                 padding: 10px;
                 &-list {
+                    background: #F8F9FE;
                     padding-bottom: 10px;
                 }
                 &-field {
+                    --background: #F8F9FE;
                     --padding-start: 20px;
                     --padding-end: 20px;
                     --highlight-background: none;
