@@ -25,12 +25,10 @@ export class CountryState {
         private countryService: CountryService
     ) {}
 
-    // Get State countries
     @Selector() static getCountryList(state: CountryStateModel) {
         return state.countries;
     }
 
-    // Get a countries
     @Action(GetCountry)
     get({getState, setState}: StateContext<CountryStateModel>) {
         return this.countryService.getCountries(1).pipe(tap((result) => {
@@ -42,7 +40,6 @@ export class CountryState {
         }));
     }
 
-    // Load a countries
     @Action(LoadMoreCountry)
     load({getState, patchState}: StateContext<CountryStateModel>, {id}:  LoadMoreCountry) {
         return this.countryService.getCountries(id).pipe(tap((result) => {
@@ -53,7 +50,6 @@ export class CountryState {
         }));
     }
 
-    // Refresh a countries, set empty array
     @Action(RefreshCountry)
     refresh({getState, setState}: StateContext<CountryStateModel>) {
         const state = getState();
