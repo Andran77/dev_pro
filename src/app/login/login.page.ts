@@ -13,7 +13,7 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
   usarnamePattern = /^[a-z0-9]+$/i;
-  passwordPattern = /^[a-z]+$/i;
+  passwordPattern = /^[a-z0-9]+$/i;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
           Validators.required,
           Validators.maxLength(20),
           Validators.minLength(6),
-          Validators.pattern(this.usarnamePattern)
+          Validators.pattern(this.passwordPattern)
         ]
       )
     })
